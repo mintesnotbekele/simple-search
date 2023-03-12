@@ -1,3 +1,11 @@
+
+   	
+    var json;
+    var res;
+    document.addEventListener('DOMContentLoaded', async function() {
+        res = await fetch('http://localhost:8000/getComments');
+         json = await res.json()
+    }, false);
 document.getElementById('search-input').addEventListener('keyup', async (e) => {
     // Search comments
     // Use this API: https://jsonplaceholder.typicode.com/comments?postId=3
@@ -6,11 +14,15 @@ document.getElementById('search-input').addEventListener('keyup', async (e) => {
     // Things to look out for
     // ---
     // Use es6
-
-    const res = await fetch('http://localhost:8000/')
-    const json = await res.json()
-
-    const result = `<li>${json.join('</li><li>')}</li>`
-    document.getElementById('results').innerHTML = result
-
+    let results = [];
+    input = document.getElementById("search-input").value;
+    var list =  document.getElementById('results');  
+    list.innerHTML = "";
+    list.style.display = "block";
+    for(const key in json)
+      {
+    if(input.length >0 && json[key].name.includes(input)){
+        list.innerHTML += `<li class="listitems"> ${json[key].name}</li>`;
+      }
+     }
 })
